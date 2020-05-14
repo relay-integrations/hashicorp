@@ -1,0 +1,8 @@
+apiVersion: container/v1
+kind: StepContainer
+inherit: {from: sdk, name: bash.v1}
+title: Hashicorp Vault
+description: >
+  This task step runs commands against Hashicorp Vault instances.
+settings:
+  Image: vault:latest

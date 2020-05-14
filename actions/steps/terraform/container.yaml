@@ -1,0 +1,8 @@
+apiVersion: container/v1
+kind: StepContainer
+inherit: {from: sdk, name: bash.v1}
+title: Hashicorp Terraform
+description: >
+  The Terraform task runs Terraform `apply`.
+settings:
+  Image: hashicorp/terraform:light
