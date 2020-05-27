@@ -1,6 +1,6 @@
-# HashiCorp integration
+# Terraform integration
 
-Integration with HashiCorp for Puppet Relay.
+Integration with Terraform for Puppet Relay.
 
 ## External requirements
 
