@@ -29,12 +29,14 @@ CREDENTIALS=$(ni get -p {.credentials})
 if [ -n "${CREDENTIALS}" ]; then
     ni credentials config
 
-    PROVIDER=$(ni get -p {.provider})
-    if [ "${PROVIDER}" == "aws" ]; then
-        export AWS_SHARED_CREDENTIALS_FILE=/workspace/credentials
-    else
-        export GOOGLE_APPLICATION_CREDENTIALS=/workspace/credentials.json
-    fi
+    export GOOGLE_APPLICATION_CREDENTIALS=/workspace/credentials.json
+fi
+
+AWS=$(ni get -p {.aws})
+if [ -n "${AWS}" ]; then
+    ni aws config
+
+    export AWS_SHARED_CREDENTIALS_FILE=/workspace/.aws/credentials
 fi
 
 GIT=$(ni get -p {.git})
