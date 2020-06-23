@@ -47,7 +47,7 @@ if [ -n "${GIT}" ]; then
 fi
 
 declare -a TERRAFORM_ARGS
-TERRAFORM_ARGS+=( -input=false -auto-approve -state-out=/workspace/step.tfstate )
+TERRAFORM_ARGS+=( -input=false -auto-approve )
 
 ni get -p {.plan} >/workspace/step.tfplan
 if [[ "$( wc -c </workspace/step.tfplan )" -gt 0 ]]; then
@@ -59,20 +59,20 @@ fi
 
 declare -a TERRAFORM_INIT_ARGS="( $( $NI get | $JQ -r 'try .backendConfig | to_entries[] | "-backend-config=\( .key )=\( .value )" | @sh' ) )"
 
-(
-  cd "${DIRECTORY}"
+cd "${DIRECTORY}"
 
-  export TF_IN_AUTOMATION=true
+export TF_IN_AUTOMATION=true
 
-  terraform init "${TERRAFORM_INIT_ARGS[@]}"
-  terraform workspace new "${WORKSPACE}" || {
-    echo "step: ignoring error creating workspace because it may already exist" >&2
-  }
-  terraform workspace select ${WORKSPACE}
-  terraform apply "${TERRAFORM_ARGS[@]}"
-)
+terraform init "${TERRAFORM_INIT_ARGS[@]}"
+terraform workspace new "${WORKSPACE}" || {
+  echo "step: ignoring error creating workspace because it may already exist" >&2
+}
+terraform workspace select ${WORKSPACE}
+terraform apply "${TERRAFORM_ARGS[@]}"
 
-declare -a OUTPUT_KEYS="( $( terraform output -json -state=/workspace/step.tfstate | jq -r 'keys | .[]' ) )"
+terraform output -json >/workspace/outputs.json
+
+declare -a OUTPUT_KEYS="( $( jq -r 'keys | .[]' /workspace/outputs.json ) )"
 for KEY in "${OUTPUT_KEYS[@]}"; do
-  ni output set --key "${KEY}" --json --value "$( terraform output -json -state=/workspace/step.tfstate "${KEY}" )"
+  ni output set --key "${KEY}" --json --value "$( jq --arg key "${KEY}" '.[$key].value' /workspace/outputs.json )"
 done
