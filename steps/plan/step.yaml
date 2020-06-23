@@ -1,0 +1,12 @@
+apiVersion: integration/v1
+kind: Step
+name: destroy
+version: 1
+summary: Plan a Terraform configuration
+description: |
+  This step will plan the given Terraform module. The binary plan is available
+  as the output `plan`. An indicator of whether there are changes is available
+  as the output `changed`.
+build:
+  apiVersion: build/v1
+  kind: Docker

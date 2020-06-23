@@ -1,0 +1,10 @@
+apiVersion: integration/v1
+kind: Step
+name: destroy
+version: 1
+summary: Destroy a Terraform configuration
+description: |
+  This step will destroy the given Terraform module.
+build:
+  apiVersion: build/v1
+  kind: Docker
