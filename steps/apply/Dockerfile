@@ -12,10 +12,10 @@ RUN set -eux ; \
     cd - && \
     rm -fr /tmp/ni
 RUN apk --no-cache add bash ca-certificates curl git jq openssh && update-ca-certificates
-COPY "./step.sh" "/nebula/step-terraform.sh"
+COPY "./step.sh" "/nebula/step-terraform-step-apply.sh"
 ENTRYPOINT []
-CMD ["/bin/bash", "/nebula/step-terraform.sh"]
+CMD ["/bin/bash", "/nebula/step-terraform-step-apply.sh"]
 
-LABEL "org.opencontainers.image.title"="Hashicorp Terraform"
-LABEL "org.opencontainers.image.description"="The Terraform task runs Terraform `apply`."
+LABEL "org.opencontainers.image.title"="Apply a Terraform configuration"
+LABEL "org.opencontainers.image.description"="This step will apply the given Terraform module or plan. The outputs of this step are the same as the Terraform outputs."
 LABEL "com.puppet.nebula.sdk.version"="v1"

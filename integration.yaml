@@ -5,7 +5,7 @@ apiVersion: integration/v1
 kind: Integration
 
 # The integration slug. Required.
-name: hashicorp
+name: terraform
 
 # The release channel for this integration. One of alpha, beta, rc or stable.
 # Optional. Defaults to stable.
@@ -22,11 +22,12 @@ version: v20200408
 
 # The shortest possible accurate description of this integration. Required. May
 # just be the name of the service.
-summary: HashiCorp
+summary: Terraform
 
 # A paragraph or two describing what this integration does. Optional. Markdown.
 description: |
-    Integration with HashiCorp.
+  This integration provides interoperability with HashiCorp Terraform to manage
+  infrastructure.
 
 # License information. Optional. If not specified, this integration is assumed
 # to be unlicensed proprietary code. Otherwise, must be a valid SPDX License

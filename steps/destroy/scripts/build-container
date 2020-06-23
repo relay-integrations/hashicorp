@@ -38,9 +38,9 @@ done
 shift $(( OPTIND - 1 ))
 
 
-$DOCKER $DOCKER_ARGS build $DOCKER_BUILD_ARGS --tag sdk.nebula.localhost/intermediate/bceb4cc6a6f5/terraform --file Dockerfile .
+$DOCKER $DOCKER_ARGS build $DOCKER_BUILD_ARGS --tag sdk.nebula.localhost/intermediate/a881ab9f106a/terraform-step-destroy --file Dockerfile .
 
 for TAG in ${TAGS[@]+"${TAGS[@]}"}; do
-  $DOCKER $DOCKER_ARGS tag sdk.nebula.localhost/intermediate/bceb4cc6a6f5/terraform "projectnebula/terraform:${TAG}" && \
-    printf "# Tagged %s:%s\n" projectnebula/terraform "${TAG}"
+  $DOCKER $DOCKER_ARGS tag sdk.nebula.localhost/intermediate/a881ab9f106a/terraform-step-destroy "relaysh/terraform-step-destroy:${TAG}" && \
+    printf "# Tagged %s:%s\n" relaysh/terraform-step-destroy "${TAG}"
 done
