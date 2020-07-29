@@ -37,6 +37,12 @@ if [ -n "${AWS}" ]; then
   export AWS_SHARED_CREDENTIALS_FILE=/workspace/.aws/credentials
 fi
 
+GCP=$(ni get -p {.gcp})
+if [ -n "${GCP}" ]; then
+  ni gcp config
+	`ni gcp env`
+fi
+
 DIRECTORY=$(ni get -p {.directory})
 
 GIT=$(ni get -p {.git})
