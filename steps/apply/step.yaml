@@ -9,3 +9,5 @@ description: |
 build:
   apiVersion: build/v1
   kind: Docker
+publish:
+  repository: relaysh/terraform-step-apply

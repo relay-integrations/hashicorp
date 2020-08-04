@@ -47,3 +47,6 @@ homepage: https://github.com/relay-integrations/relay-terraform
 # URL to this integration's source code. Optional. If the homepage is a GitHub
 # link, may be inferred automatically.
 source: git://github.com/relay-integrations/relay-terraform.git
+
+tags:
+  - configuration
