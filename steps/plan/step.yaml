@@ -1,6 +1,6 @@
 apiVersion: integration/v1
 kind: Step
-name: destroy
+name: plan
 version: 1
 summary: Plan a Terraform configuration
 description: |
