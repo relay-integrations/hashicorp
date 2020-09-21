@@ -18,15 +18,21 @@
     },
     "workspace": {
       "type": "string",
+      "default": "default",
       "description": "The name of the Terraform workspace to run (defaults to 'default')"
     },
     "credentials": {
-      "type": "string",
-      "description": "Relay secret containing the credentials.json for accessing GCP"
+      "type": "object",
+      "description": "Relay secret containing a base-64 encoded service-account.json file for accessing GCP",
+      "properties" : {
+        "service-account.json": {
+          "type": "string"
+        }
+      }
     },
     "aws": {
       "type": "object",
-      "description": "AWS access keys",
+      "description": "AWS access credentials",
       "properties": {
         "accessKeyID": {
           "type": "string",
@@ -35,6 +41,10 @@
         "secretAccessKey": {
           "type": "string",
           "description": "The secret key for the AWS account"
+        },
+        "region": {
+          "type": "string",
+          "description": "The default AWS region to use"
         }
       },
       "required": [

@@ -3,19 +3,8 @@
   "type": "object",
   "properties": {
     "plan": {
-      "type": "object",
+      "type": "string",
       "description": "Object containting a base64-encoded Terraform .tfplan",
-      "properties": {
-        "$encoding": {
-          "type": "string",
-          "description": "The encoding of the data field (always base64)"
-        },
-        "data": {
-          "type": "string",
-          "description": "The content of the .tfplan, encoded in the format described by $encoding"
-        }
-      },
-      "required": [ "$encoding", "data" ]
     },
     "changed": {
       "type": "boolean",
