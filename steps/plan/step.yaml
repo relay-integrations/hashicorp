@@ -4,11 +4,16 @@ name: plan
 version: 1
 summary: Plan a Terraform configuration
 description: |
-  This step will plan the given Terraform module. The binary plan is available
-  as the output `plan`. An indicator of whether there are changes is available
-  as the output `changed`.
+  This step will plan the given Terraform module.
 build:
   apiVersion: build/v1
   kind: Docker
 publish:
   repository: relaysh/terraform-step-plan
+schemas:
+  spec:
+    source: file
+    file: spec.schema.json
+  outputs:
+    source: file
+    file: outputs.schema.json

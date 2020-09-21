@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "object",
+      "description": "Object containting a base64-encoded Terraform .tfplan",
+      "properties": {
+        "$encoding": {
+          "type": "string",
+          "description": "The encoding of the data field (always base64)"
+        },
+        "data": {
+          "type": "string",
+          "description": "The content of the .tfplan, encoded in the format described by $encoding"
+        }
+      },
+      "required": [ "$encoding", "data" ]
+    },
+    "changed": {
+      "type": "boolean",
+      "description": "Boolean set to true if any resources will be changed by running the plan"
+    }
+  },
+  "required": ["plan"]
+}
+
