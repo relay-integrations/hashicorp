@@ -4,7 +4,7 @@
   "properties": {
     "plan": {
       "type": "string",
-      "description": "Terraform plan data to be used to apply this specific plan",
+      "description": "Terraform plan data to be used to apply this specific plan"
     },
     "changed": {
       "type": "boolean",
@@ -13,4 +13,3 @@
   },
   "required": ["plan"]
 }
-
