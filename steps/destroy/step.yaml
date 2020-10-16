@@ -10,3 +10,7 @@ build:
   kind: Docker
 publish:
   repository: relaysh/terraform-step-destroy
+schemas:
+  spec:
+    source: file
+    file: spec.schema.json

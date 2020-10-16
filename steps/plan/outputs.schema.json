@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "string",
+      "description": "Terraform plan data to be used to apply this specific plan",
+    },
+    "changed": {
+      "type": "boolean",
+      "description": "Boolean set to true if any resources will be changed by running the plan"
+    }
+  },
+  "required": ["plan"]
+}
+

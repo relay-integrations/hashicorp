@@ -2,17 +2,13 @@
 
 Integration with Terraform for Puppet Relay.
 
-## External requirements
+## Steps
 
-_TBD_
-
-## Getting started
-
-_TBD_
-
-## Examples
-
-_TBD_
+| Name                     | Description                       |
+|--------------------------|-----------------------------------|
+|[apply](steps/apply/)     | Applies a terraform configuration |
+|[destroy](steps/destroy/) | Runs tf destroy                   |
+|[plan](steps/plan/)       | Outputs an execution plan         |
 
 ## Contributing
 
