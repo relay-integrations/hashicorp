@@ -8,10 +8,16 @@
       "properties": {
         "packages": {
           "type": "array",
+          "items": {
+            "type": "string"
+          },
           "description": "list of apk packages to install at container execution time"
         },
         "commands": {
           "type": "array",
+          "items": {
+            "type": "string"
+          },
           "description": "List of shell commands to run after packages are installed but before Terrafrom executes"
         }
       }
