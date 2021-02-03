@@ -62,9 +62,16 @@
       "type": "string",
       "description": "Subdirectory of the git repository containing the Terraform config root"
     },
+    "varFiles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of variable files to include relative to the module directory"
+    },
     "vars": {
       "type": "object",
-      "description": "A map of variables to set as tfvars"
+      "description": "A map of variables to set, overriding any defaults or variables from files"
     },
     "backendConfig": {
       "type": "object",
