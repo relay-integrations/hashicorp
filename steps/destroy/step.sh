@@ -46,7 +46,13 @@ if [ -n "${GIT}" ]; then
   DIRECTORY="/workspace/${NAME}/${DIRECTORY}"
 fi
 
+declare -a TERRAFORM_ARGS
+
+declare -a VAR_FILES="( $( ni get | jq -r 'try .varFiles[] | "-var-file=\(.)" | @sh' ) )"
+[[ ${#VAR_FILES[@]} -gt 0 ]] && TERRAFORM_ARGS+=( "${VAR_FILES[@]}" )
+
 ni get | jq 'try .vars // {}' >/workspace/step.tfvars.json
+TERRAFORM_ARGS+=( -var-file=/workspace/step.tfvars.json )
 
 declare -a TERRAFORM_INIT_ARGS="( $( $NI get | $JQ -r 'try .backendConfig | to_entries[] | "-backend-config=\( .key )=\( .value )" | @sh' ) )"
 
@@ -60,5 +66,5 @@ declare -a TERRAFORM_INIT_ARGS="( $( $NI get | $JQ -r 'try .backendConfig | to_e
     echo "step: ignoring error creating workspace because it may already exist" >&2
   }
   terraform workspace select ${WORKSPACE}
-  terraform destroy -var-file=/workspace/step.tfvars.json -auto-approve
+  terraform destroy -auto-approve "${TERRAFORM_ARGS[@]}"
 )

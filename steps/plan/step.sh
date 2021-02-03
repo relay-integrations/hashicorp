@@ -46,10 +46,14 @@ if [ -n "${GIT}" ]; then
   DIRECTORY="/workspace/${NAME}/${DIRECTORY}"
 fi
 
-ni get | jq 'try .vars // {}' >/workspace/step.tfvars.json
-
 declare -a TERRAFORM_ARGS
 TERRAFORM_ARGS+=( -input=false )
+
+declare -a VAR_FILES="( $( ni get | jq -r 'try .varFiles[] | "-var-file=\(.)" | @sh' ) )"
+[[ ${#VAR_FILES[@]} -gt 0 ]] && TERRAFORM_ARGS+=( "${VAR_FILES[@]}" )
+
+ni get | jq 'try .vars // {}' >/workspace/step.tfvars.json
+TERRAFORM_ARGS+=( -var-file=/workspace/step.tfvars.json )
 
 declare -a TERRAFORM_INIT_ARGS="( $( $NI get | $JQ -r 'try .backendConfig | to_entries[] | "-backend-config=\( .key )=\( .value )" | @sh' ) )"
 
@@ -64,7 +68,7 @@ terraform workspace new "${WORKSPACE}" || {
   echo "step: ignoring error creating workspace because it may already exist" >&2
 }
 terraform workspace select ${WORKSPACE}
-terraform plan -detailed-exitcode -input=false -var-file=/workspace/step.tfvars.json -out=/workspace/step.tfplan || {
+terraform plan -detailed-exitcode -out=/workspace/step.tfplan "${TERRAFORM_ARGS[@]}" || {
   EXITCODE="$?"
   if [[ $EXITCODE == 2 ]]; then
     CHANGED=true

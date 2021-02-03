@@ -53,6 +53,9 @@ ni get -p {.plan} >/workspace/step.tfplan
 if [[ "$( wc -c </workspace/step.tfplan )" -gt 0 ]]; then
   TERRAFORM_ARGS+=( /workspace/step.tfplan )
 else
+  declare -a VAR_FILES="( $( ni get | jq -r 'try .varFiles[] | "-var-file=\(.)" | @sh' ) )"
+  [[ ${#VAR_FILES[@]} -gt 0 ]] && TERRAFORM_ARGS+=( "${VAR_FILES[@]}" )
+
   ni get | jq 'try .vars // {}' >/workspace/step.tfvars.json
   TERRAFORM_ARGS+=( -var-file=/workspace/step.tfvars.json )
 fi
