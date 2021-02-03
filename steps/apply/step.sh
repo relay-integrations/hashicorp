@@ -71,6 +71,12 @@ terraform workspace new "${WORKSPACE}" || {
   echo "step: ignoring error creating workspace because it may already exist" >&2
 }
 terraform workspace select ${WORKSPACE}
+
+# Provider initialization may be workspace-dependent. See
+# https://discuss.hashicorp.com/t/terraform-v0-13-failed-to-instantiate-provider-for-every-project/16522
+# for more information.
+terraform init -reconfigure "${TERRAFORM_INIT_ARGS[@]}"
+
 terraform apply "${TERRAFORM_ARGS[@]}"
 
 terraform output -json >/workspace/outputs.json
