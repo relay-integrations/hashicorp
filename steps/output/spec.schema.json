@@ -101,25 +101,26 @@
           "properties": {
             "sshKey": {
               "type": "string",
-              "description": "The SSH key to use when cloning the git repository. You can pass the key into Relay as a secret."
+              "description": "The SSH key to use when cloning the git repository."
             },
             "knownHosts": {
               "type": "string",
-              "description": "SSH known hosts file. Pass the contents of the file into Relay as a secret."
+              "description": "SSH known hosts file."
             }
           }
         },
         "name": {
           "type": "string",
-          "description": "A directory name for the git clone"
+          "description": "A directory name for the git clone."
         },
         "branch": {
           "type": "string",
-          "description": "The git branch to clone"
+          "description": "The Git branch to clone.",
+          "default": "master"
         },
         "repository": {
           "type": "string",
-          "description": "The git repository URL"
+          "description": "The git repository URL."
         }
       },
       "required": [
