@@ -7,4 +7,4 @@ description: >
   This step will apply the given Terraform module or plan. The outputs of this
   step are the same as the Terraform outputs.
 settings:
-  Image: hashicorp/terraform:light
+  image: hashicorp/terraform:light

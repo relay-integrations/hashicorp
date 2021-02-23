@@ -15,3 +15,20 @@ schemas:
   spec:
     source: file
     file: spec.schema.json
+examples:
+- summary: Terraform apply
+  content:
+    apiVersion: v1
+    kind: Step
+    name: terraform-step-apply
+    image: relaysh/terraform-step-apply
+    spec:
+      directory: !Parameter directory
+      git:
+        connection: !Connection {type: ssh, name: my-ssh-connection}
+        name: !Parameter name
+        branch: !Parameter gitBranch
+        repository: !Parameter gitRepository
+      google:
+        connection: !Connection {type: gcp, name: my-gcp-connection}
+      workspace: !Secret workspace

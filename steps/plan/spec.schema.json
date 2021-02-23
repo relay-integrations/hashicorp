@@ -27,35 +27,59 @@
       "default": "default",
       "description": "The name of the Terraform workspace to run (defaults to 'default')"
     },
-    "credentials": {
+    "google": {
       "type": "object",
-      "description": "Relay secret containing a base-64 encoded service-account.json file for accessing GCP",
-      "properties" : {
-        "service-account.json": {
-          "type": "string"
-        }
-      }
-    },
-    "aws": {
-      "type": "object",
-      "description": "AWS access credentials",
+      "description": "A mapping of Google account configuration.",
       "properties": {
-        "accessKeyID": {
-          "type": "string",
-          "description": "Access Key ID for the AWS account"
-        },
-        "secretAccessKey": {
-          "type": "string",
-          "description": "The secret key for the AWS account"
-        },
-        "region": {
-          "type": "string",
-          "description": "The default AWS region to use"
+        "connection": {
+          "type": "object",
+          "x-relay-connectionType": "gcp",
+          "description": "A Relay GCP connection to use",
+          "properties": {
+            "serviceAccountKey": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "serviceAccountKey"
+          ]
         }
       },
       "required": [
-        "accessKeyID",
-        "secretAccessKey"
+        "connection"
+      ]
+    },
+    "aws": {
+      "type": "object",
+      "description": "A mapping of AWS account configuration.",
+      "properties": {
+        "connection": {
+          "type": "object",
+          "x-relay-connectionType": "aws",
+          "description": "A Relay AWS connection to use",
+          "properties": {
+            "accessKeyID": {
+              "type": "string",
+              "description": "Access Key ID"
+            },
+            "secretAccessKey": {
+              "type": "string",
+              "description": "Secret Access Key"
+            }
+          },
+          "required": [
+            "accessKeyID",
+            "secretAccessKey"
+          ]
+        },
+        "region": {
+          "type": "string",
+          "description": "The AWS region to use (for example, us-west-2)"
+        }
+      },
+      "required": [
+        "connection",
+        "region"
       ]
     },
     "directory": {
@@ -81,13 +105,20 @@
       "type": "object",
       "description": "A git repository containing the terraform code to run",
       "properties": {
-        "ssh_key": {
-          "type": "string",
-          "description": "The SSH key to use when cloning the git repository. You can pass the key  into Relay as a secret."
-        },
-        "known_hosts": {
-          "type": "string",
-          "description": "SSH known hosts file. Pass the contents of the file into Relay as a secr et."
+        "connection": {
+          "type": "object",
+          "x-relay-connectionType": "ssh",
+          "description": "A Relay SSH connection to use",
+          "properties": {
+            "sshKey": {
+              "type": "string",
+              "description": "The SSH key to use when cloning the git repository. You can pass the key into Relay as a secret."
+            },
+            "knownHosts": {
+              "type": "string",
+              "description": "SSH known hosts file. Pass the contents of the file into Relay as a secret."
+            }
+          }
         },
         "name": {
           "type": "string",
@@ -103,8 +134,6 @@
         }
       },
       "required": [
-        "ssh_key",
-        "known_hosts",
         "name",
         "repository"
       ]

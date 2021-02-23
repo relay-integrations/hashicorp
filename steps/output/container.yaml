@@ -1,0 +1,10 @@
+apiVersion: container/v1
+kind: StepContainer
+name: terraform-step-output
+inherit: {from: sdk, name: bash.v1}
+title: List Terraform outputs
+description: >
+  This step will list the outputs of the given Terraform module. The outputs of
+  this step are the same as the Terraform outputs.
+settings:
+  image: hashicorp/terraform:light

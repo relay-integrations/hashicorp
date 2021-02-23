@@ -17,3 +17,20 @@ schemas:
   outputs:
     source: file
     file: outputs.schema.json
+examples:
+- summary: Terraform plan
+  content:
+    apiVersion: v1
+    kind: Step
+    name: terraform-step-plan
+    image: relaysh/terraform-step-plan
+    spec:
+      directory: !Parameter directory
+      git:
+        connection: !Connection {type: ssh, name: my-ssh-connection}
+        name: !Parameter name
+        branch: !Parameter gitBranch
+        repository: !Parameter gitRepository
+      google:
+        connection: !Connection {type: gcp, name: my-gcp-connection}
+      workspace: !Secret workspace

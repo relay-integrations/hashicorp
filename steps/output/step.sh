@@ -52,27 +52,13 @@ if [ -n "${GIT}" ]; then
   DIRECTORY="/workspace/${NAME}/${DIRECTORY}"
 fi
 
-declare -a TERRAFORM_ARGS
-TERRAFORM_ARGS+=( -input=false )
-
-declare -a VAR_FILES="( $( ni get | jq -r 'try .varFiles[] | "-var-file=\(.)" | @sh' ) )"
-[[ ${#VAR_FILES[@]} -gt 0 ]] && TERRAFORM_ARGS+=( "${VAR_FILES[@]}" )
-
-ni get | jq 'try .vars // {}' >/workspace/step.tfvars.json
-TERRAFORM_ARGS+=( -var-file=/workspace/step.tfvars.json )
-
 declare -a TERRAFORM_INIT_ARGS="( $( $NI get | $JQ -r 'try .backendConfig | to_entries[] | "-backend-config=\( .key )=\( .value )" | @sh' ) )"
-
-CHANGED=false
 
 cd "${DIRECTORY}"
 
 export TF_IN_AUTOMATION=true
 
 terraform init "${TERRAFORM_INIT_ARGS[@]}"
-terraform workspace new "${WORKSPACE}" || {
-  echo "step: ignoring error creating workspace because it may already exist" >&2
-}
 terraform workspace select ${WORKSPACE}
 
 # Provider initialization may be workspace-dependent. See
@@ -80,16 +66,10 @@ terraform workspace select ${WORKSPACE}
 # for more information.
 terraform init -reconfigure "${TERRAFORM_INIT_ARGS[@]}"
 
-terraform plan -detailed-exitcode -out=/workspace/step.tfplan "${TERRAFORM_ARGS[@]}" || {
-  EXITCODE="$?"
-  if [[ $EXITCODE == 2 ]]; then
-    CHANGED=true
-  else
-    exit $EXITCODE
-  fi
-}
+terraform output
+terraform output -json >/workspace/outputs.json
 
-PLAN="$( base64 </workspace/step.tfplan )"
-
-ni output set --key plan --json --value "$( jq -cn --arg data "${PLAN}" '{"$encoding": "base64", "data": $data}' )"
-ni output set --key changed --json --value $CHANGED
+declare -a OUTPUT_KEYS="( $( jq -r 'keys | .[]' /workspace/outputs.json ) )"
+for KEY in "${OUTPUT_KEYS[@]}"; do
+  ni output set --key "${KEY}" --json --value "$( jq --arg key "${KEY}" '.[$key].value' /workspace/outputs.json )"
+done

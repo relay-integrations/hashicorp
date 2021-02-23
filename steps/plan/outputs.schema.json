@@ -11,5 +11,7 @@
       "description": "Boolean set to true if any resources will be changed by running the plan"
     }
   },
-  "required": ["plan"]
+  "required": [
+    "plan"
+  ]
 }

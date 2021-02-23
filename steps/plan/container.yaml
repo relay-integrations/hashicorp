@@ -8,4 +8,4 @@ description: >
   as the output `plan`. An indicator of whether there are changes is available
   as the output `changed`.
 settings:
-  Image: hashicorp/terraform:light
+  image: hashicorp/terraform:light

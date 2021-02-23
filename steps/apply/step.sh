@@ -31,6 +31,12 @@ if [ -n "${CREDENTIALS}" ]; then
   export GOOGLE_APPLICATION_CREDENTIALS=/workspace/credentials.json
 fi
 
+GOOGLE=$(ni get -p {.google})
+if [ -n "${GOOGLE}" ]; then
+  ni gcp config -d "/workspace/.gcp"
+  export GOOGLE_APPLICATION_CREDENTIALS=/workspace/.gcp/credentials.json
+fi
+
 AWS=$(ni get -p {.aws})
 if [ -n "${AWS}" ]; then
   ni aws config
