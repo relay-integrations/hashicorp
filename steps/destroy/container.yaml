@@ -1,9 +1,0 @@
-apiVersion: container/v1
-kind: StepContainer
-name: terraform-step-destroy
-inherit: {from: sdk, name: bash.v1}
-title: Destroy a Terraform configuration
-description: >
-  This step will destroy the given Terraform module.
-settings:
-  Image: hashicorp/terraform:light

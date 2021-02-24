@@ -1,26 +1,27 @@
 apiVersion: integration/v1
 kind: Step
-name: destroy
+name: output
 version: 1
-summary: Destroy a Terraform configuration
+summary: List Terraform outputs
 description: |
-  This step will destroy the given Terraform module.
+  This step will list the outputs of the given Terraform module. The outputs of
+  this step are the same as the Terraform outputs.
 build:
   apiVersion: build/v1
   kind: Docker
 publish:
-  repository: relaysh/terraform-step-destroy
+  repository: relaysh/terraform-step-output
 schemas:
   spec:
     source: file
     file: spec.schema.json
 examples:
-- summary: Terraform destroy
+- summary: Terraform output
   content:
     apiVersion: v1
     kind: Step
-    name: terraform-step-destroy
-    image: relaysh/terraform-step-destroy
+    name: terraform-step-output
+    image: relaysh/terraform-step-output
     spec:
       directory: !Parameter directory
       git:
