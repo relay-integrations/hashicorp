@@ -7,7 +7,8 @@ Integration with Terraform for Puppet Relay.
 | Name                     | Description                       |
 |--------------------------|-----------------------------------|
 |[apply](/steps/apply)     | Applies a terraform configuration |
-|[destroy](/steps/destroy) | Runs tf destroy                   |
+|[destroy](/steps/destroy) | Destroy a Terraform configuration |
+|[output](/steps/output)   | List Terraform outputs            |
 |[plan](/steps/plan)       | Outputs an execution plan         |
 
 ## Contributing
