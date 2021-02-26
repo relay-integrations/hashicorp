@@ -25,7 +25,7 @@
     "workspace": {
       "type": "string",
       "default": "default",
-      "description": "The name of the Terraform workspace to run (defaults to 'default')"
+      "description": "The name of the Terraform workspace to run"
     },
     "google": {
       "type": "object",
