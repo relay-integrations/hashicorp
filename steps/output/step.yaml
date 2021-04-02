@@ -4,7 +4,7 @@ name: output
 version: 1
 summary: List Terraform outputs
 description: |
-  This step will list the outputs of the given Terraform module. The outputs of
+  Lists the outputs of the given Terraform module. The outputs of
   this step are the same as the Terraform outputs.
 build:
   apiVersion: build/v1

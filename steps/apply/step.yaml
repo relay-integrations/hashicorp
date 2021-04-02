@@ -4,7 +4,7 @@ name: apply
 version: 1
 summary: Apply a Terraform configuration
 description: |
-  This step will apply the given Terraform module or plan. The outputs of this
+  Applies the given Terraform module or plan. The outputs of this
   step are the same as the Terraform outputs.
 build:
   apiVersion: build/v1

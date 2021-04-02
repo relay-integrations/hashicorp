@@ -4,7 +4,7 @@ name: plan
 version: 1
 summary: Plan a Terraform configuration
 description: |
-  This step will plan the given Terraform module.
+  Outputs the plan of the given Terraform module.
 build:
   apiVersion: build/v1
   kind: Docker
