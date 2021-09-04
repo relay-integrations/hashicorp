@@ -82,6 +82,44 @@
         "region"
       ]
     },
+    "azure": {
+      "type": "object",
+      "description": "A mapping of Azure account configuration.",
+      "properties": {
+        "connection": {
+          "type": "object",
+          "x-relay-connectionType": "azure",
+          "description": "A Relay Azure connection to use",
+          "properties": {
+            "subscriptionID": {
+              "type": "string",
+              "description": "Azure Subscription ID"
+            },
+            "clientID": {
+              "type": "string",
+              "description": "Azure Service Principal client ID"
+            },
+            "tenantID": {
+              "type": "string",
+              "description": "Azure Service Principal tenant ID"
+            },
+            "secret": {
+              "type": "string",
+              "description": "Azure Service Principal secret"
+            }
+          },
+          "required": [
+            "subscriptionID",
+            "clientID",
+            "tenantID",
+            "secret"
+          ]
+        }
+      },
+      "required": [
+        "connection"
+      ]
+    },
     "directory": {
       "type": "string",
       "description": "Subdirectory of the git repository containing the Terraform config root"

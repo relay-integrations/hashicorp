@@ -43,6 +43,11 @@ if [ -n "${AWS}" ]; then
   export AWS_SHARED_CREDENTIALS_FILE=/workspace/.aws/credentials
 fi
 
+AZURE=$(ni get -p {.azure})
+if [ -n "${AZURE}" ]; then
+  eval "$( ni azure arm env )"
+fi
+
 DIRECTORY=$(ni get -p {.directory})
 
 GIT=$(ni get -p {.git})
