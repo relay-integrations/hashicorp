@@ -71,10 +71,25 @@ terraform workspace select ${WORKSPACE}
 # for more information.
 terraform init -reconfigure "${TERRAFORM_INIT_ARGS[@]}"
 
-terraform output
-terraform output -json >/workspace/outputs.json
+WORKSPACE_OUTPUTS=/workspace/outputs.json
 
-declare -a OUTPUT_KEYS="( $( jq -r 'keys | .[]' /workspace/outputs.json ) )"
+terraform output
+terraform output -json > ${WORKSPACE_OUTPUTS}
+
+declare -a NI_OUTPUT_SET_ARGS
+
+declare -a OUTPUT_KEYS="( $( ${JQ} -r 'keys | .[]' ${WORKSPACE_OUTPUTS} ) )"
+
 for KEY in "${OUTPUT_KEYS[@]}"; do
-  ni output set --key "${KEY}" --json --value "$( jq --arg key "${KEY}" '.[$key].value' /workspace/outputs.json )"
+  NI_OUTPUT_SET_ARGS=( --json )
+
+  SENSITIVE="$( ${JQ} --arg key "${KEY}" '.[$key].sensitive' ${WORKSPACE_OUTPUTS} )"
+  if [ "${SENSITIVE}" = "true" ]; then
+      NI_OUTPUT_SET_ARGS+=( --sensitive )
+  fi
+
+  VALUE="$( ${JQ} --arg key "${KEY}" '.[$key].value' ${WORKSPACE_OUTPUTS} )"
+
+  ${NI} output set "${NI_OUTPUT_SET_ARGS[@]}" \
+    --key "${KEY}" --value "${VALUE}"
 done
